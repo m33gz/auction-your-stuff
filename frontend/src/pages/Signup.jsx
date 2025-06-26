@@ -4,7 +4,7 @@ import { auth } from '../firebase/firebase';
 import { db } from '../firebase/firebase'; // assumes you exported `db` from firebase config
 import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
-
+import './Signup.css';
 
 export default function Signup() {
   const [email, setEmail] = useState('');
