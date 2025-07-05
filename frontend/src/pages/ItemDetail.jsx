@@ -31,9 +31,9 @@ export default function ItemDetail() {
       <p><strong>Start Time:</strong> {item.startTime?.toDate().toLocaleString()}</p>
       <p><strong>End Time:</strong> {item.endTime?.toDate().toLocaleString()}</p>
 
-      <Link to={`/items/${item.id}/bids`}>
-        <button style={{ marginTop: '20px' }}>Place a Bid</button>
-      </Link>
+      <Link to={`/buy/items/${item.id}/bid`}>
+        <button>Place a Bid</button>
+        </Link>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { auth, db, storage } from '../firebase/firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
-import { collection, addDoc, Timestamp } from 'firebase/firestore';
+import { collection, doc, setDoc, Timestamp } from 'firebase/firestore';
 import './SellCategory.css';
 
 export default function SellCategory() {
@@ -27,25 +27,37 @@ export default function SellCategory() {
 
       let imageUrl = '';
 
+      // ✅ Upload image if provided
       if (imageFile) {
         const imageRef = ref(storage, `auction_images/${Date.now()}_${imageFile.name}`);
         const snapshot = await uploadBytes(imageRef, imageFile);
         imageUrl = await getDownloadURL(snapshot.ref);
       }
 
-      await addDoc(collection(db, 'auctions'), {
+      // ✅ Define start and end time (7 days from now)
+      const startTime = Timestamp.now();
+      const endTime = Timestamp.fromDate(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
+
+      // ✅ Create a new document reference with an auto ID
+      const itemRef = doc(collection(db, 'items'));
+      const itemId = itemRef.id;
+
+      // ✅ Save item using setDoc so we can use itemId
+      await setDoc(itemRef, {
         title,
         description,
         startingPrice: parseFloat(startingPrice),
         imageUrl,
         sellerId: user.uid,
-        category,
-        createdAt: Timestamp.now(),
+        categoryId: category,
+        createdAt: startTime,
+        startTime,
+        endTime,
         status: 'active'
       });
 
       alert('Item listed successfully!');
-      navigate('/buy');
+      navigate(`/buy/items/${itemId}`);
     } catch (err) {
       console.error(err);
       setError(err.message);
@@ -95,7 +107,7 @@ export default function SellCategory() {
             onChange={e => setImageFile(e.target.files[0])}
           />
         </div>
-        {error && <p>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit" disabled={submitting}>
           {submitting ? 'Submitting...' : 'List Item'}
         </button>
@@ -103,4 +115,6 @@ export default function SellCategory() {
     </div>
   );
 }
+
+
 

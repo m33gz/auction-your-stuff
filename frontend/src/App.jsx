@@ -4,8 +4,6 @@ import Header from './components/Header';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Sell from './pages/Sell';
-import Buy from './pages/Buy';
 import BuyLayout from './pages/BuyLayout';
 import SellCategory from './pages/SellCategory';
 import CategoryItems from './pages/CategoryItems'; 
@@ -20,20 +18,22 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/sell" element={<Sell />} />
+
+        {/* Selling route (goes directly to category-based page) */}
         <Route path="/sell/:category" element={<SellCategory />} />
-        
+
         <Route path="/buy" element={<BuyLayout />}>
-          <Route index element={<Buy />} /> {/* /buy */}
-          <Route path=":category" element={<CategoryItems />} /> {/* /buy/electronics */}
+          <Route index element={<p>Select a category to begin browsing.</p>} />
+          <Route path=":category" element={<CategoryItems />} />
+          <Route path="items/:itemId" element={<ItemDetail />} />
+          <Route path="items/:itemId/bid" element={<PlaceBid />} />
         </Route>
 
-        <Route path="/items/:itemId" element={<ItemDetail />} />
-        <Route path="/items/:itemId/bids" element={<PlaceBid />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
 

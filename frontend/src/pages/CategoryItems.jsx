@@ -29,7 +29,7 @@ export default function CategoryItems() {
           {items.map(item => (
             <li key={item.id}>
               <strong>{item.title}</strong> — ${item.startingPrice} <br />
-              <Link to={`/items/${item.id}`}>View Item</Link>
+              <Link to={`/buy/items/${item.id}`}>View Item</Link>
             </li>
           ))}
         </ul>
