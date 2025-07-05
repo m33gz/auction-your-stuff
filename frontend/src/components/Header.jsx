@@ -6,6 +6,10 @@ import './Header.css';
 const Header = () => {
   const navigate = useNavigate();
 
+  const handleLogoClick = () => {
+    navigate('/');
+  };
+
   const handleSellClick = (e) => {
     const user = auth.currentUser;
     if (!user) {
@@ -16,12 +20,10 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1 className="logo">Auction Your Stuff</h1>
+      <h1 className="logo" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>Auction Your Stuff</h1>
       <nav className="nav-buttons">
         <Link to="/signup" className="nav-btn">Sign Up</Link>
         <Link to="/login" className="nav-btn">Login</Link>
-        <Link to="/sell" className="nav-btn" onClick={handleSellClick}>Sell</Link>
-        <Link to="/buy" className="nav-btn">Buy</Link>
       </nav>
     </header>
   );

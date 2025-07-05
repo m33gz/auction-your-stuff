@@ -1,5 +1,5 @@
 import React from 'react';
-import { Outlet } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 import './BuyLayout.css';
 
 const categories = [
@@ -13,13 +13,16 @@ export default function BuyLayout() {
         <h3>Categories</h3>
         <ul>
           {categories.map(cat => (
-            <li key={cat}>{cat}</li>
+            <li key={cat}>
+              <Link to={`/buy/${cat.toLowerCase().replace(/\s+/g, '-')}`}>{cat}</Link>
+            </li>
           ))}
         </ul>
       </aside>
       <main className="buy-content">
-        <Outlet /> {/* Nested route content goes here */}
+        <Outlet />
       </main>
     </div>
   );
 }
+

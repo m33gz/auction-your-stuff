@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './components/Header';
 import Home from './pages/Home';
@@ -8,8 +8,8 @@ import Sell from './pages/Sell';
 import Buy from './pages/Buy';
 import BuyLayout from './pages/BuyLayout';
 import SellCategory from './pages/SellCategory';
-import BuyCategory from './pages/BuyCategory';
-
+import CategoryItems from './pages/CategoryItems'; 
+import ItemDetail from './pages/ItemDetail';
 
 function App() {
   return (
@@ -18,16 +18,20 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup/>} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/sell" element={<Sell />} />
         <Route path="/sell/:category" element={<SellCategory />} />
+        
         <Route path="/buy" element={<BuyLayout />}>
           <Route index element={<Buy />} /> {/* /buy */}
-          <Route path=":category" element={<BuyCategory />} /> {/* /buy/electronics */}
+          <Route path=":category" element={<CategoryItems />} /> {/* /buy/electronics */}
         </Route>
+
+        <Route path="/items/:itemId" element={<ItemDetail />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
+
