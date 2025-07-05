@@ -10,6 +10,7 @@ import BuyLayout from './pages/BuyLayout';
 import SellCategory from './pages/SellCategory';
 import CategoryItems from './pages/CategoryItems'; 
 import ItemDetail from './pages/ItemDetail';
+import PlaceBid from './pages/PlaceBid';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         </Route>
 
         <Route path="/items/:itemId" element={<ItemDetail />} />
+        <Route path="/items/:itemId/bids" element={<PlaceBid />} />
       </Routes>
     </Router>
   );

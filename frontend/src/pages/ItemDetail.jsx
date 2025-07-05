@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 
@@ -27,6 +27,14 @@ export default function ItemDetail() {
       <p><strong>Price:</strong> ${item.startingPrice}</p>
       <p><strong>Description:</strong> {item.description}</p>
       <p><strong>Status:</strong> {item.status}</p>
+      <p><strong>Highest Bid:</strong> ${item.highestBid || 'None yet'}</p>
+      <p><strong>Start Time:</strong> {item.startTime?.toDate().toLocaleString()}</p>
+      <p><strong>End Time:</strong> {item.endTime?.toDate().toLocaleString()}</p>
+
+      <Link to={`/items/${item.id}/bids`}>
+        <button style={{ marginTop: '20px' }}>Place a Bid</button>
+      </Link>
     </div>
   );
 }
+
