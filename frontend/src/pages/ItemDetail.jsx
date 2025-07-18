@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
+import { db, auth } from '../firebase/firebase';
 
 export default function ItemDetail() {
   const { itemId } = useParams();
   const [item, setItem] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchItem = async () => {
@@ -15,10 +17,21 @@ export default function ItemDetail() {
         setItem({ id: docSnap.id, ...docSnap.data() });
       }
     };
+
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setIsLoggedIn(!!user);
+    });
+
     fetchItem();
+    return () => unsubscribe();
   }, [itemId]);
 
   if (!item) return <p>Loading item...</p>;
+
+  const handleBidClick = () => {
+    alert('To place a bid, you must be logged in.');
+    navigate('/login');
+  };
 
   return (
     <div>
@@ -31,10 +44,15 @@ export default function ItemDetail() {
       <p><strong>Start Time:</strong> {item.startTime?.toDate().toLocaleString()}</p>
       <p><strong>End Time:</strong> {item.endTime?.toDate().toLocaleString()}</p>
 
-      <Link to={`/buy/items/${item.id}/bid`}>
-        <button>Place a Bid</button>
+      {isLoggedIn ? (
+        <Link to={`/buy/items/${item.id}/bid`}>
+          <button>Place a Bid</button>
         </Link>
+      ) : (
+        <button onClick={handleBidClick}>Place a Bid</button>
+      )}
     </div>
   );
 }
+
 
