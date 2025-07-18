@@ -24,7 +24,7 @@ function Login() {
       await signInWithEmailAndPassword(auth, email, password);
       alert("Login successful");
       setError('');
-      navigate('/buy');
+      navigate('/');
     } catch (error) {
       setLoginAttempts(prev => prev + 1);
       setError("Incorrect username/password");
