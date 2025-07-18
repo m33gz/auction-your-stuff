@@ -10,6 +10,9 @@ import CategoryItems from './pages/CategoryItems';
 import ItemDetail from './pages/ItemDetail';
 import PlaceBid from './pages/PlaceBid';
 
+// ✅ Import AdminReports
+import AdminReports from './pages/admin/AdminReports';
+
 function App() {
   return (
     <Router>
@@ -22,6 +25,7 @@ function App() {
         {/* Selling route (goes directly to category-based page) */}
         <Route path="/sell/:category" element={<SellCategory />} />
 
+        {/* Buying routes */}
         <Route path="/buy" element={<BuyLayout />}>
           <Route index element={<p>Select a category to begin browsing.</p>} />
           <Route path=":category" element={<CategoryItems />} />
@@ -29,6 +33,8 @@ function App() {
           <Route path="items/:itemId/bid" element={<PlaceBid />} />
         </Route>
 
+        {/* ✅ Admin Reports Route */}
+        <Route path="/admin/reports" element={<AdminReports />} />
       </Routes>
     </Router>
   );
